@@ -1,0 +1,7 @@
+.idea/
+__pycache__/
+*.mp4
+*.gif
+*.png
+output/
+.ipynb_checkpoints/
