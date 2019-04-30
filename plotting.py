@@ -53,23 +53,26 @@ class FunctionPlot():
     def mark_point(self, x, y, style, markersize=5, **kwargs):
         patches = self.ax.plot(x, y, style, markersize=markersize, **kwargs)
         self.patches.append(patches)
+        self.ax.legend()
         return len(self.patches) - 1
 
     def vline(self, x, style, **kwargs):
         patches = self.ax.plot((x, x), self.range, style, **kwargs)
         self.patches.append(patches)
+        self.ax.legend()
         return len(self.patches) - 1
 
     def hline(self, y, style, **kwargs):
         patches = self.ax.plot(self.domain, (y, y), style, **kwargs)
         self.patches.append(patches)
+        self.ax.legend()
         return len(self.patches) - 1
 
     def add_normal_pdf(self, x, y, sigma, style, highlight_above=None, highlight_below=None, highlight_color=None,
-                       vline=True, **kwargs):
+                       vline=True, scale=1., **kwargs):
         patches = []
         X = np.atleast_2d(np.linspace(self.range[0], self.range[1], self.num_points)).T
-        Y = stats.norm.pdf(X, y, sigma)
+        Y = stats.norm.pdf(X, y, sigma) * scale
         patches.extend(self.ax.plot(Y + x, X, style, **kwargs))
         if vline:
             patches.extend(self.ax.plot((x, x), self.range, style, alpha=0.5))
